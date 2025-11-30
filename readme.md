@@ -1,42 +1,29 @@
-# Laravel Response
+Laravel Response
 
-A lightweight reusable response trait for clean and structured API success/error responses in Laravel (8 → 12).
+A lightweight Laravel package that provides a clean, consistent structure for API success and error responses.
 
-![Packagist Downloads](https://img.shields.io/packagist/dt/fadyreda99/laravel-response)
-![Latest Version](https://img.shields.io/packagist/v/fadyreda99/laravel-response)
-![License](https://img.shields.io/badge/license-MIT-green)
+Supports Laravel 8 → 12 with auto-discovery.
 
----
+<p align="center"> <img src="https://img.shields.io/packagist/v/fadyreda99/laravel-response?style=for-the-badge"> <img src="https://img.shields.io/packagist/dt/fadyreda99/laravel-response?style=for-the-badge"> <img src="https://img.shields.io/badge/Laravel-8%20|%209%20|%2010%20|%2011%20|%2012-red?style=for-the-badge"> <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge"> </p>
 
-## 🚀 Introduction
+🚀 Introduction
+Every Laravel project needs a unified structure for API responses.
+This package solves that by providing:
+-successResponse() → Standard success JSON
+-errorResponse() → Standard error JSON
+-BaseController (optional) → Add the trait automatically
+-Clean, readable, reusable responses across all your apps
 
-This package provides a simple and consistent structure for API responses in Laravel applications.  
-It gives you two reusable methods:
-
-- `successResponse()` → Standard successful response
-- `errorResponse()` → Standard error response
-
-Works with Laravel **8, 9, 10, 11, and 12**.
-
----
-
-## 📦 Installation
-
-```bash
+📦 Installation
 composer require fadyreda99/laravel-response
 
-Laravel auto-discovers the package, so no configuration needed.
-
-
 🧩 Usage
-Import and use the trait in any controller:
-
-
-use fadyreda99\LaravelResponse\ResponseTrait;
+Import and use the trait in your controller
+use Fadyreda99\LaravelResponse\ResponseTrait;
 
 class UserController extends Controller
 {
-    use ResponseTrait;
+use ResponseTrait;
 
     public function index()
     {
@@ -45,80 +32,98 @@ class UserController extends Controller
             'Users fetched successfully'
         );
     }
+
 }
 
+📘 Full Examples (EVERYTHING YOU NEED)
 
-
-✅ Response Methods
-1. Success Response
-successResponse(
-    $data = null,
-    string $message = 'Request succeeded',
-    int $code = 200,
-    ?array $pagination = null,
-    ?array $additionals = null
-)
-
-Example:
+✅ 1️⃣ Success Response
+🔹 Basic Example
 return $this->successResponse(
-    ['id' => 1, 'name' => 'Fady'],
-    'User loaded successfully'
+['id' => 1, 'name' => 'Fady'],
+'User loaded successfully'
 );
 
-Response:
+Response JSON:
 {
-    "status": "success",
-    "message": "User loaded successfully",
-    "data": {
-        "id": 1,
-        "name": "Fady"
-    }
+"status": "success",
+"message": "User loaded successfully",
+"data": {
+"id": 1,
+"name": "Fady"
+}
 }
 
-With pagination:
+🔹 With Pagination
 return $this->successResponse(
-    $users,
-    'Users retrieved',
-    200,
-    ['page' => 1, 'total' => 20]
+$users,
+'Users retrieved',
+200,
+[
+'page' => 1,
+'per_page' => 10,
+'total' => 100
+]
 );
 
-With additional data:
-return $this->successResponse(
-    $users,
-    'Users retrieved',
-    200,
-    ['page' => 1, 'total' => 20],
-    ['testKey'=> 'test value']
-);
-
-
-2. Error Response
-errorResponse(
-    string $message = 'Request failed',
-    int $code = 400,
-    $data = null
-)
-
-
-Example:
-return $this->errorResponse(
-    'Invalid credentials',
-    401
-);
-
-Response:
+Response JSON:
 {
-    "status": "error",
-    "message": "Invalid credentials"
+"status": "success",
+"message": "Users retrieved",
+"data": [...],
+"pagination": {
+"page": 1,
+"per_page": 10,
+"total": 100
+}
 }
 
-With extra data:
-return $this->errorResponse(
-    'Validation error',
-    422,
-    ['email' => 'Email is required']
+🔹 With Additional Data
+return $this->successResponse(
+$users,
+'Users retrieved',
+200,
+['page' => 1],
+['debug' => 'Extra info here']
 );
 
+Response JSON:
+{
+"status": "success",
+"message": "Users retrieved",
+"data": [...],
+"pagination": { "page": 1 },
+"additionals": { "debug": "Extra info here" }
+}
 
-```
+❌ 2️⃣ Error Response
+🔹 Basic Error
+return $this->errorResponse(
+'Invalid request',
+400
+);
+
+Response JSON:
+{
+"status": "error",
+"message": "Invalid request"
+}
+
+🔹 Error with Extra Data
+return $this->errorResponse(
+'Validation failed',
+422,
+['email' => 'The email field is required']
+);
+
+Response JSON:
+{
+"status": "error",
+"message": "Validation failed",
+"data": {
+"email": "The email field is required"
+}
+}
+
+📝 License
+This package is open-sourced under the MIT License.
