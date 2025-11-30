@@ -47,7 +47,7 @@ class UserController extends Controller
 {
     use ResponseTrait;
 
-    ###basic example to return success response 
+    ### basic example to return success response 
     public function successIndex()
     {
         return $this->successResponse(
@@ -56,7 +56,7 @@ class UserController extends Controller
         );
     }
 
-    ###basic example to return error response 
+    ###  basic example to return error response 
     public function errorIndex()
     {
         return $this->errorResponse(
