@@ -19,10 +19,10 @@ Supports **Laravel 8 → 12** with auto-discovery.
 Every Laravel project needs a unified structure for API responses.
 This package solves that by providing:
 
-* `successResponse()` → Standard success JSON
-* `errorResponse()` → Standard error JSON
-* Optional `BaseController` → Automatically includes the trait
-* Clean, readable, reusable responses across all your apps
+- `successResponse()` → Standard success JSON
+- `errorResponse()` → Standard error JSON
+- Optional `BaseController` → Automatically includes the trait
+- Clean, readable, reusable responses across all your apps
 
 ---
 
@@ -47,11 +47,21 @@ class UserController extends Controller
 {
     use ResponseTrait;
 
-    public function index()
+    ###basic example to return success response 
+    public function successIndex()
     {
         return $this->successResponse(
             ['users' => User::all()],
             'Users fetched successfully'
+        );
+    }
+
+    ###basic example to return error response 
+    public function errorIndex()
+    {
+        return $this->errorResponse(
+            'Invalid request',
+            400
         );
     }
 }
@@ -78,12 +88,12 @@ return $this->successResponse(
 
 ```json
 {
-    "status": "success",
-    "message": "User loaded successfully",
-    "data": {
-        "id": 1,
-        "name": "Fady"
-    }
+  "status": "success",
+  "message": "User loaded successfully",
+  "data": {
+    "id": 1,
+    "name": "Fady"
+  }
 }
 ```
 
@@ -162,8 +172,8 @@ return $this->errorResponse(
 
 ```json
 {
-    "status": "error",
-    "message": "Invalid request"
+  "status": "error",
+  "message": "Invalid request"
 }
 ```
 
@@ -183,13 +193,14 @@ return $this->errorResponse(
 
 ```json
 {
-    "status": "error",
-    "message": "Validation failed",
-    "data": {
-        "email": "Email is required"
-    }
+  "status": "error",
+  "message": "Validation failed",
+  "data": {
+    "email": "Email is required"
+  }
 }
 ```
+
 # 📝 License
 
 This package is open-sourced under the **MIT License**.
