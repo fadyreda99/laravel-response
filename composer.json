@@ -1,11 +1,11 @@
 {
-  "name": "vendor/laravel-response",
+  "name": "fadyreda99/laravel-response",
   "description": "Reusable success/error response trait for Laravel projects",
   "type": "library",
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Vendor\\LaravelResponse\\": "src/"
+      "Fadyreda99\\LaravelResponse\\": "src/"
     }
   },
   "require": {

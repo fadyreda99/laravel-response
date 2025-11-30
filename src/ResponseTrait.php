@@ -1,6 +1,6 @@
 <?php
 
-namespace Vendor\LaravelResponse;
+namespace Fadyreda99\LaravelResponse;
 
 use Illuminate\Http\JsonResponse;
 
