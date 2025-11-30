@@ -56,7 +56,7 @@ class UserController extends Controller
         );
     }
 
-    ###  basic example to return error response 
+    ### basic example to return error response 
     public function errorIndex()
     {
         return $this->errorResponse(
