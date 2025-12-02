@@ -47,7 +47,7 @@ class UserController extends Controller
 {
     use ResponseTrait;
 
-    ### basic example to return success response 
+    ### basic example to return success response
     public function successIndex()
     {
         return $this->successResponse(
@@ -56,7 +56,17 @@ class UserController extends Controller
         );
     }
 
-    ### basic example to return error response 
+     ###  example to return success response with pagination data
+    public function successIndex()
+    {
+        $users = Uset::paginate(10);
+        $userResource = UserResource::collection($users);
+        // get pagination data
+        $paginationData = $this->getPaginationData($users);
+        return $this->successResponse($userResource, 'ok', 201, $paginationData);
+    }
+
+    ### basic example to return error response
     public function errorIndex()
     {
         return $this->errorResponse(
@@ -99,7 +109,7 @@ return $this->successResponse(
 
 ---
 
-### 🔹 With Pagination
+### 🔹 With basic Pagination
 
 ```php
 return $this->successResponse(
@@ -125,6 +135,46 @@ return $this->successResponse(
         "page": 1,
         "per_page": 10,
         "total": 100
+    }
+}
+```
+
+---
+
+### 🔹 With Pagination from package
+
+```php
+
+  $paginationData = $this->getPaginationData($users);
+  return $this->successResponse(
+    $userResource,
+     'ok',
+     200,
+     $paginationData
+    );
+
+```
+
+**Response JSON:**
+
+```json
+{
+    "status": "success",
+    "message": "Users retrieved",
+    "data": [...],
+    "pagination": {
+        "current_page": 1,
+        "last_page": 5,
+        "total_page": 5,
+        "per_page": 2,
+        "total_items": 10,
+        "from": 1,
+        "to": 2,
+        "next_page_url": "URL/test?page=2",
+        "prev_page_url": null,
+        "first_page_url": "URL/test?page=1",
+        "last_page_url": "URL/test?page=5",
+        "path": "URL/test"
     }
 }
 ```
